@@ -1,9 +1,10 @@
-export interface Settlemet {
+import { Behavior, iPosition, ProductionItem } from "../../../sim-types/Types";
+
+export interface SettlementModel {
     id: string;
     ownerId: string;
     name: string;
-    behaviors: string;
-    productionQueue: string;
-    x: number;
-    y: number;
+    behaviors: Behavior[];
+    productionQueue: ProductionItem[];
+    position: iPosition;
 }

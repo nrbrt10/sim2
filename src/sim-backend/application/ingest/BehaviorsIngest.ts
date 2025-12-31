@@ -1,23 +1,20 @@
+import { Behavior } from "../../../sim-types/Types";
+
 type Record = {
     string: any
-}
-
-type NormalizedBehavior = {
-    system: string;
-    config: unknown;
 }
 
 export function normalizeBehaviors(behaviors: string) {
     const rawBehaviors = extractBehaviors(behaviors);
 
-    const normalizedBehaviors: NormalizedBehavior[] = Object.entries(rawBehaviors).map(([system, config]) => {
+    const normalizedBehaviors: Behavior[] = Object.entries(rawBehaviors).map(([system, config]) => {
         return {
             system,
             config
         }
     });
 
-    return normalizeBehaviors;
+    return normalizedBehaviors;
 }
 
 function extractBehaviors(behaviors: string) {

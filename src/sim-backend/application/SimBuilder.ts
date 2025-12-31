@@ -1,5 +1,3 @@
-import { iSimData } from "../../sim-types/SimData.types";
-import { Player } from "../domain/entities/Players";
 import { SimFactory } from "../domain/factories/SimFactory";
 import { Sim } from "../domain/Sim";
 import { SimDataDTO } from "../infra/models/SimData";

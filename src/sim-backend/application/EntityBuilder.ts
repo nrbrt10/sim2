@@ -1,17 +1,18 @@
-import { iPosition } from "../../sim-types/Types";
+import { iBehavior, iPosition } from "../../sim-types/Types";
 import { Mob } from "../domain/entities/Mobs";
 import { Player } from "../domain/entities/Players";
 import { Settlement } from "../domain/entities/Settlements";
+import { MobFactory } from "../domain/factories/MobFactory";
 import { PlayerFactory } from "../domain/factories/PlayerFactory";
 import { SettlementFactory } from "../domain/factories/SettlementFactory";
-import { MobDTO } from "../infra/models/MobDTO";
-import { PlayerDTO } from "../infra/models/PlayerDTO";
+import { MobModel } from "../infra/models/MobModel";
 import { PlayerModel } from "../infra/models/PlayerModel";
-import { SettlementDTO } from "../infra/models/SettlementDTO";
+import { SettlementModel } from "../infra/models/SettlementModel";
 import { SimDataDTO } from "../infra/models/SimData";
 import { BehaviorBuilder } from "./BehaviorBuilder";
 import { normalizeMobFromSim, normalizeMobFromDB } from "./ingest/MobIngest";
 import { normalizePlayerFromDB } from "./ingest/PlayerIngest";
+import { normalizeSettlementFromDB } from "./ingest/SettlementIngest";
 
 export class EntityBuilder {
     static buildInitialState(data: SimDataDTO) {
@@ -23,11 +24,12 @@ export class EntityBuilder {
     private static fromDB(data: SimDataDTO) {
         console.log("Creating world entities");
         const normalizedMobs = normalizeMobFromDB({ mobs: data.mobs });
+        const normalizedSettlements = normalizeSettlementFromDB({ settlements: data.settlements})
         const normalizedPlayers = normalizePlayerFromDB( { players: data.players });
 
         const createdPlayers = this.createPlayers({ players: normalizedPlayers });
-        const createdSettlements = this.createSettlements({ settlements: data.settlements });
-        const createdMobs = this.createMobs({ mobs: data.mobs });
+        const createdSettlements = this.createSettlements({ settlements: normalizedSettlements });
+        const createdMobs = this.createMobs({ mobs: normalizedMobs });
 
         return { players: createdPlayers, settlements: createdSettlements, mobs: createdMobs }
     }
@@ -44,23 +46,27 @@ export class EntityBuilder {
     }
 
     static createSettlements( options: {
-        settlements: SettlementDTO[]
+        settlements: SettlementModel[]
     }) {
         const createdSettlements: Map<string, Settlement> = new Map();
 
         options.settlements.forEach((row) => {
-            const { id, newSettlement } = SettlementFactory.createSettlement(row.id, row.name, row.player_id, { x: row.x, y: row.y });
+            const behaviorMap: Map<string, iBehavior> = BehaviorBuilder.createBehaviors(row.behaviors);
+            const { id, newSettlement } = SettlementFactory.createSettlement(row.id, row.name, row.ownerId, row.position, behaviorMap, row.productionQueue);
             createdSettlements.set(id, newSettlement);
         });
         return createdSettlements;
     }
 
     static createMobs( options: {
-        mobs: MobDTO[]
+        mobs: MobModel[]
     }) {
         const createdMobs: Map<string, Mob> = new Map();
 
         options.mobs.forEach((row) => {
+            const behaviorMap: Map<string, iBehavior> = BehaviorBuilder.createBehaviors(row.behaviors);
+            const { id, newMob } = MobFactory.createMob(row.id, row.name, row.ownerId, row.position, behaviorMap);
+            createdMobs.set(id, newMob);
         });
         return createdMobs;
     }

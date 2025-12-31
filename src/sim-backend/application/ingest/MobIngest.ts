@@ -1,5 +1,4 @@
-import { iMob } from "../../../sim-types/SimData.types";
-import { Behavior, iBehavior, iPosition, movementType } from "../../../sim-types/Types";
+import { Behavior, iPosition } from "../../../sim-types/Types";
 import { createUUID } from "../../../utils/createUUID";
 import { getRandomInt } from "../../../utils/getRandomInt";
 import { MobDTO } from "../../infra/models/MobDTO";
@@ -22,8 +21,12 @@ export function normalizeMobFromDB(args: {
 }): MobModel[] {
     const normalizedMobs: MobModel[] = [];
     args.mobs.forEach(mob => {
-        const behaviors: Behavior[] = [];
-        const b = mob.behaviors ? normalizeBehaviors(mob.behaviors) : behaviors.push({ system: 'movement', config: { type: 'wander' } });
+        let behaviors: Behavior[] = [];
+        if (mob.behaviors) {
+            behaviors = normalizeBehaviors(mob.behaviors);
+        } else {
+            behaviors.push({ system: 'movement', config: { type: 'wander' }});
+        }
         normalizedMobs.push({ id: mob.id, name: mob.name, ownerId: mob.player_id, position: { x: mob.x, y: mob.y }, behaviors })
     })
     return normalizedMobs;

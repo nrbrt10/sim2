@@ -1,18 +1,17 @@
 import { WorldEntity } from "./Entity.js";
 import { Mob } from "./Mobs.js";
-import type { iPosition } from "../../../sim-types/Types.js";
-import type { Player } from "./Players.js";
-import { ProductionItem } from "../../../sim-types/SimData.types.js";
+import type { iBehavior, iPosition, ProductionItem } from "../../../sim-types/Types.js";
+
 
 export class Settlement extends WorldEntity {
     inhabitats: Map<string, Mob>;
     productionQueue: ProductionItem[];
 
-    constructor(uuid: string, name: string, ownerUUID: string | null, position: iPosition) {
-        super(uuid, name, ownerUUID, position, new Map());
+    constructor(uuid: string, name: string, ownerId: string | null, position: iPosition, behaviors: Map<string, iBehavior>, productionQueue: ProductionItem[]) {
+        super(uuid, name, ownerId, position, behaviors);
         this.name = name;
         this.inhabitats = new Map();
-        this.productionQueue = [];
+        this.productionQueue = productionQueue;
     }
 
     countPopulation() {

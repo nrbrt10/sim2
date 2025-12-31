@@ -39,3 +39,12 @@ export type Behavior = {
 export type BehaviorConfig = {
     [key: string]: string;
 }
+
+export type ProductionItem = {
+    type: string;
+    cost: ResourceCost;
+}
+
+export type ResourceCost = {
+    time: number;
+}
