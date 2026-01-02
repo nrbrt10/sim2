@@ -4,6 +4,8 @@ import { Mob } from "./entities/Mobs";
 import { BaseEntity } from "./entities/Entity";
 import { SpawnSystem } from "./systems/SpawnSystem";
 import { EntityBuilder } from "../application/EntityBuilder";
+import { iPosition } from "../../sim-types/Types";
+import { constructMobFromSim } from "../application/creation/MobFromSim";
 
 export class Sim extends BaseEntity{
     players: Map<string, Player>;
@@ -42,13 +44,9 @@ export class Sim extends BaseEntity{
         player?.mobs.set(mob.id, mob);
     }
 
-    spawnMob(args: { owner: string, source?: Settlement}) {
-        
-        
-        const payload = {
-            ownerId: args.owner,
-            position: args.source?.position,
-        }
+    requestMob(args: { ownerId: string, source?: Settlement}) {
+        const payload = constructMobFromSim(args);
+
         const { id, newMob } = EntityBuilder.createMob(payload);
         this.registerMob(newMob)
     }

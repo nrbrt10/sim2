@@ -1,5 +1,3 @@
-import { iPlayer } from "../../../sim-types/SimData.types";
-import { createUUID } from "../../../utils/createUUID";
 import { PlayerModel } from "../../infra/models/PlayerModel";
 import { PlayerDTO } from "../../infra/models/PlayerDTO";
 

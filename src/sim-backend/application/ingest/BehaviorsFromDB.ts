@@ -1,4 +1,5 @@
-import { Behavior } from "../../../sim-types/Types";
+import { NormalizedBehavior } from "../types/application.types";
+
 
 type Record = {
     string: any
@@ -7,7 +8,7 @@ type Record = {
 export function normalizeBehaviors(behaviors: string) {
     const rawBehaviors = extractBehaviors(behaviors);
 
-    const normalizedBehaviors: Behavior[] = Object.entries(rawBehaviors).map(([system, config]) => {
+    const normalizedBehaviors: NormalizedBehavior[] = Object.entries(rawBehaviors).map(([system, config]) => {
         return {
             system,
             config

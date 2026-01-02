@@ -1,6 +1,6 @@
-import { createUUID } from "../../../../utils/createUUID"
+import { generateUUID } from "../../../../shared/utils/generateUUID"
 
-const simId = createUUID();
+const simId = generateUUID();
 
 export const simSeed = `
 INSERT INTO sims
@@ -9,9 +9,9 @@ VALUES
 ('${simId}', 'seed')
 `;
 
-const playerIdIven = createUUID();
-const playerIdRohan = createUUID();
-const playerIdMark = createUUID();
+const playerIdIven = generateUUID();
+const playerIdRohan = generateUUID();
+const playerIdMark = generateUUID();
 
 export const playersSeed = `
 INSERT INTO players
@@ -22,9 +22,9 @@ VALUES
 ('${playerIdMark}', '${simId}', 'Mark', 1)
 `
 
-const settlementIdAlecjo = createUUID();
-const settlementIdAltaSolejo = createUUID();
-const settlementIdEthelmere = createUUID();
+const settlementIdAlecjo = generateUUID();
+const settlementIdAltaSolejo = generateUUID();
+const settlementIdEthelmere = generateUUID();
 
 export const settlementsSeed = `
 INSERT INTO settlements
@@ -35,13 +35,13 @@ VALUES
 ('${settlementIdEthelmere}','${playerIdMark}','Ethelmere', 250, 250)
 `;
 
-const neeraId = createUUID();
-const tenguId = createUUID();
-const luquinId = createUUID();
+const neeraId = generateUUID();
+const tenguId = generateUUID();
+const luquinId = generateUUID();
 
 const behavior = {
     movement: { type: 'wander' },
-    combat: {stance: 'offensive'}
+    combat: { stance: 'offensive' }
 };
 const serialized = JSON.stringify(behavior);
 

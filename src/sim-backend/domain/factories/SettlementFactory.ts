@@ -1,5 +1,4 @@
 import { iBehavior, iPosition, ProductionItem } from "../../../sim-types/Types";
-import { createUUID } from "../../../utils/createUUID";
 import { Settlement } from "../entities/Settlements";
 
 export class SettlementFactory {

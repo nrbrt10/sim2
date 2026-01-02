@@ -10,9 +10,9 @@ import { PlayerModel } from "../infra/models/PlayerModel";
 import { SettlementModel } from "../infra/models/SettlementModel";
 import { SimDataDTO } from "../infra/models/SimData";
 import { BehaviorBuilder } from "./BehaviorBuilder";
-import { normalizeMobFromSim, normalizeMobFromDB } from "./ingest/MobIngest";
-import { normalizePlayerFromDB } from "./ingest/PlayerIngest";
-import { normalizeSettlementFromDB } from "./ingest/SettlementIngest";
+import { normalizeMobFromDB } from "./ingest/MobFromDB";
+import { normalizePlayerFromDB } from "./ingest/PlayerFromDB";
+import { normalizeSettlementFromDB } from "./ingest/SettlementFromDB";
 
 export class EntityBuilder {
     static buildInitialState(data: SimDataDTO) {
@@ -64,16 +64,14 @@ export class EntityBuilder {
         const createdMobs: Map<string, Mob> = new Map();
 
         options.mobs.forEach((row) => {
-            const behaviorMap: Map<string, iBehavior> = BehaviorBuilder.createBehaviors(row.behaviors);
-            const { id, newMob } = MobFactory.createMob(row.id, row.name, row.ownerId, row.position, behaviorMap);
-            createdMobs.set(id, newMob);
+            const mob = this.createMob(row)
+            createdMobs.set(mob.id, mob.newMob);
         });
         return createdMobs;
     }
 
-    static createMob(args: { ownerId: string, position: iPosition}) {
-        const { id, name, ownerId, position, behaviors} = normalizeMobFromSim(args);
-        //const behaviorInstances = BehaviorBuilder.createBehaviors();
-        //return MobFactory.createMob(id, name, ownerId, position, behaviorInstances);
+    static createMob(args: MobModel) {
+        const behaviorMap: Map<string, iBehavior> = BehaviorBuilder.createBehaviors(args.behaviors);
+        return MobFactory.create({ id: args.id, name: args.name, ownerId: args.ownerId, position: args.position, behaviors: behaviorMap, residenceId: args.residenceId });
     }
 }

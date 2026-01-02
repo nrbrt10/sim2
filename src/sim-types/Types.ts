@@ -1,3 +1,4 @@
+import { behaviorRegistry } from "../sim-backend/domain/behaviors/BehaviorRegistry";
 import type { WorldEntity } from "../sim-backend/domain/entities/Entity"
 
 export interface iPosition {
@@ -21,19 +22,11 @@ export enum entityType {
     mob
 }
 
-export enum movementType {
-    wander = 'wander',
-    path = 'path'
-}
+type systems = keyof typeof behaviorRegistry;
 
-export enum combatStance {
-    offensive = 'offensife',
-    defensive = 'defensive'
-}
-
-export type Behavior = {
+export type NormalizedBehavior = {
     system: string;
-    config: BehaviorConfig;
+    config: string;
 }
 
 export type BehaviorConfig = {

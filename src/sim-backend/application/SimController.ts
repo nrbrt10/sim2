@@ -1,7 +1,7 @@
 import { SimRepository } from "../infra/db/SimRepository";
 import { Sim } from "../domain/Sim";
 import { SimBuilder } from "./SimBuilder";
-import { createUUID } from "../../utils/createUUID";
+import { createUUID } from "../../shared/utils/generateUUID";
 
 export class SimController {
 
