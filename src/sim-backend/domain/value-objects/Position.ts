@@ -8,8 +8,12 @@ export class Position {
     }
 
     applyDelta(dx: number, dy: number) {
-        this.x + dx;
-        this.y + dy;
+        this.x += dx;
+        this.y += dy;
+    }
+
+    get() {
+        return { x: this.x, y: this.y };
     }
 
     set(x: number, y: number) {

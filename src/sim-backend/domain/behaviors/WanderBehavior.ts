@@ -18,7 +18,6 @@ export class WanderBehavior extends BaseBehavior {
     const dX = getRandomInt(0, 2);
     const dY = getRandomInt(0, 2);
 
-    entity.position.x += dX;
-    entity.position.y += dY;
+    entity.position.applyDelta(dX, dY)
   }
 }
