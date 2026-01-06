@@ -55,6 +55,16 @@ export class Sim extends BaseEntity{
         this.registerMob(newMob)
     }
 
+    getSnapshot() {
+        return {
+            mobs: [...this.mobs.values()].map(e => ({
+                id: e.id,
+                x: e.position.x,
+                y: e.position.y
+            })),
+        };
+    }
+
     init() {
         console.log("Sim initialized.");
     }
@@ -63,7 +73,7 @@ export class Sim extends BaseEntity{
 
     }
 
-    tick() {
+    tick(dt: number) {
         this.systems.forEach(system => system.update(this));
     }
 

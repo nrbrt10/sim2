@@ -3,6 +3,9 @@ import { Sim } from "../domain/Sim";
 import { SimBuilder } from "./SimBuilder";
 
 export class SimController {
+    private lastTime = 0;
+    private running = false;
+    private tickCount = 0;
 
     constructor(
         private readonly repo: SimRepository = new SimRepository(),
@@ -13,13 +16,32 @@ export class SimController {
         const data = this.repo.getWorldData({ simId: args.simId });
         this.sim = SimBuilder.initSim(args.simId, data);
         this.sim.init();
-        this.update();
+        
+        this.running = true;
+        this.lastTime = performance.now();
+        this.loop();
+
     }
 
-    update() {
-        this.sim?.preTick();
-        this.sim?.tick();
-        this.sim?.postTick();
-        this.update();
+    stop() {
+        this.running = false;
+    }
+
+    private loop = () => {
+        if (!this.sim) return;
+        if (!this.running) return;
+
+        const now = performance.now();
+        const dt = (now - this.lastTime) / 1000;
+        this.lastTime = now;
+        this.tickCount++;
+
+        this.sim.tick(dt);
+        
+        if (this.tickCount % 10 ===0) {
+            console.log(this.sim.getSnapshot());
+        }
+
+        setTimeout(this.loop, 100);
     }
 }

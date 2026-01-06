@@ -15,14 +15,10 @@ export class WanderBehavior extends BaseBehavior {
   }
 
   randomMove(entity: WorldEntity) {
-    const dX = getRandomInt(-1, 1);
-    const dY = getRandomInt(-1, 1);
+    const dX = getRandomInt(0, 2);
+    const dY = getRandomInt(0, 2);
 
     entity.position.x += dX;
     entity.position.y += dY;
   }
-}
-
-function getRandomNum() {
-  return Math.random() * 2 - 1;
 }
