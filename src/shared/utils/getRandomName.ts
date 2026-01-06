@@ -3,7 +3,7 @@ import { getRandomInt } from "./getRandomInt";
 export function getRandomName(pool: readonly string[] = namePool): string {
     if (pool.length === 0) { throw new Error("Name pool is empty") };
 
-    const name = pool[getRandomInt(pool.length)];
+    const name = pool[getRandomInt(0, pool.length)];
     if (name === undefined) { throw new Error("Random index out of bounds")}
 
     return name;
