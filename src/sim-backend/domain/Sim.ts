@@ -74,7 +74,7 @@ export class Sim extends BaseEntity{
     }
 
     tick(dt: number) {
-        this.systems.forEach(system => system.update(this));
+        this.systems.forEach(system => system.update(dt, this));
     }
 
     postTick() {

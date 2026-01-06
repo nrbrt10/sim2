@@ -2,9 +2,9 @@ import { iSystem } from "../../../sim-types/Types";
 import { Sim } from "../Sim";
 
 export class MovementSystem implements iSystem {
-    update(sim: Sim) {
+    update(dt: number, sim: Sim) {
         sim.mobs.forEach((mob) => {
-            mob.behaviors.get("movement")?.update(mob);
+            mob.behaviors.get("movement")?.update(dt, mob);           
         });
     }
 }

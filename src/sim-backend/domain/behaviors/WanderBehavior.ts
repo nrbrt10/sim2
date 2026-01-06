@@ -10,13 +10,13 @@ export class WanderBehavior extends BaseBehavior {
     this.moves = true;
   }
 
-  update(entity: WorldEntity) {
-    this.randomMove(entity);
+  update(dt: number, entity: WorldEntity) {
+    this.randomMove(dt, entity);
   }
 
-  randomMove(entity: WorldEntity) {
-    const dX = getRandomInt(0, 2);
-    const dY = getRandomInt(0, 2);
+  randomMove(dt: number, entity: WorldEntity) {
+    const dX = getRandomInt(0, 2) * dt;
+    const dY = getRandomInt(0, 2) * dt;
 
     entity.position.applyDelta(dX, dY)
   }

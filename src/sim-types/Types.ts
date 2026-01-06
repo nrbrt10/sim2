@@ -8,11 +8,11 @@ export interface iPosition {
 }
 
 export interface iBehavior {
-    update(entity: WorldEntity): void;
+    update(dt: number, entity: WorldEntity): void;
 }
 
 export interface iSystem {
-    update(sim: Sim): void;
+    update(dt: number, sim: Sim): void;
 }
 
 export enum dataSource {
