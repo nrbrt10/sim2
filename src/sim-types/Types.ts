@@ -1,5 +1,6 @@
 import { behaviorRegistry } from "../sim-backend/domain/behaviors/BehaviorRegistry";
 import type { WorldEntity } from "../sim-backend/domain/entities/Entity"
+import { Sim } from "../sim-backend/domain/Sim";
 
 export interface iPosition {
     x: number,
@@ -8,6 +9,10 @@ export interface iPosition {
 
 export interface iBehavior {
     update(entity: WorldEntity): void;
+}
+
+export interface iSystem {
+    update(sim: Sim): void;
 }
 
 export enum dataSource {
@@ -20,17 +25,6 @@ export enum entityType {
     player,
     settlement,
     mob
-}
-
-type systems = keyof typeof behaviorRegistry;
-
-export type NormalizedBehavior = {
-    system: string;
-    config: string;
-}
-
-export type BehaviorConfig = {
-    [key: string]: string;
 }
 
 export type ProductionItem = {

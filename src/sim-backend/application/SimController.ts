@@ -1,7 +1,6 @@
 import { SimRepository } from "../infra/db/SimRepository";
 import { Sim } from "../domain/Sim";
 import { SimBuilder } from "./SimBuilder";
-import { createUUID } from "../../shared/utils/generateUUID";
 
 export class SimController {
 
@@ -11,12 +10,16 @@ export class SimController {
     ) {}
 
     start(args: { simId: string, simName?: string }) {
-        const data = this.repo.getWorldData(args.simId);
+        const data = this.repo.getWorldData({ simId: args.simId });
         this.sim = SimBuilder.initSim(args.simId, data);
+        this.sim.init();
+        this.update();
     }
 
     update() {
-
+        this.sim?.preTick();
+        this.sim?.tick();
+        this.sim?.postTick();
+        this.update();
     }
 }
-

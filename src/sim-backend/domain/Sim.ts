@@ -2,16 +2,17 @@ import { Player } from "./entities/Players";
 import { Settlement } from "./entities/Settlements";
 import { Mob } from "./entities/Mobs";
 import { BaseEntity } from "./entities/Entity";
-import { SpawnSystem } from "./systems/SpawnSystem";
 import { EntityBuilder } from "../application/EntityBuilder";
-import { iPosition } from "../../sim-types/Types";
 import { constructMobFromSim } from "../application/creation/MobFromSim";
+import { MovementSystem } from "./systems/MovementSystem";
+import { iSystem } from "../../sim-types/Types";
 
 export class Sim extends BaseEntity{
     players: Map<string, Player>;
     settlements: Map<string, Settlement>;
     mobs: Map<string, Mob>;
-    spawnSystem: SpawnSystem;
+    systems: iSystem[];
+
     pause: boolean;
 
     constructor(id: string, name: string) {
@@ -19,9 +20,12 @@ export class Sim extends BaseEntity{
         this.players = new Map();
         this.settlements = new Map();
         this.mobs = new Map();
-        this.spawnSystem = new SpawnSystem();
+        this.systems = [
+            new MovementSystem()
+        ];
 
-        this.pause = false;        
+        this.pause = false;
+
     }
 
     registerPlayer(player: Player) {
@@ -45,17 +49,25 @@ export class Sim extends BaseEntity{
     }
 
     requestMob(args: { ownerId: string, source?: Settlement}) {
-        const payload = constructMobFromSim(args);
+        const mobModel = constructMobFromSim(args);
 
-        const { id, newMob } = EntityBuilder.createMob(payload);
+        const { id, newMob } = EntityBuilder.createMob(mobModel);
         this.registerMob(newMob)
     }
 
     init() {
+        console.log("Sim initialized.");
+    }
+
+    preTick() {
 
     }
 
-    update() {
+    tick() {
+        this.systems.forEach(system => system.update(this));
+    }
+
+    postTick() {
 
     }
 }

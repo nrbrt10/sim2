@@ -1,6 +1,6 @@
 import { generateUUID } from "../../../../shared/utils/generateUUID"
 
-const simId = generateUUID();
+const simId = 'eeef97c3-6e32-4f8a-a04b-0ec3646eaefc';
 
 export const simSeed = `
 INSERT INTO sims
@@ -40,9 +40,16 @@ const tenguId = generateUUID();
 const luquinId = generateUUID();
 
 const behavior = {
-    movement: { type: 'wander' },
-    combat: { stance: 'offensive' }
+    movement: { config: "wander"},
+    combat: { config: "offensive"}
 };
+
+const b = {
+    behaviors: [
+        { system: "movement", config: "wander"},
+        { system: "combat", config: "offensive"}
+    ]
+}
 const serialized = JSON.stringify(behavior);
 
 export const mobsSeed = `
@@ -50,7 +57,7 @@ INSERT INTO mobs
 (id, player_id, settlement_id, name, x, y, behaviors)
 VALUES
 ('${neeraId}', '${playerIdIven}', '${settlementIdAlecjo}', 'Neera', 100, 0, '${serialized}'),
-('${tenguId}', '${playerIdRohan}', '${settlementIdAltaSolejo}', 'Tengu', 100, 0, null),
+('${tenguId}', '${playerIdRohan}', '${settlementIdAltaSolejo}', 'Tengu', 0, 100, null),
 ('${luquinId}', '${playerIdMark}', '${settlementIdEthelmere}', 'Luquin', 250, 250, null)
 `;
 

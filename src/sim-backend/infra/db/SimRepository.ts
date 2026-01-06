@@ -12,7 +12,7 @@ export class SimRepository {
         return !!row
     }
 
-    findByName(simName: string) {
+    findIdByName(simName: string) {
         const stmt = db.prepare('SELECT s.id FROM sims s where s.name = @name;');
         const row = stmt.get({ name: simName });
         return row;
@@ -40,10 +40,10 @@ export class SimRepository {
         return players.map(player => player.id);
     }
 
-    getWorldData(simId: string) {
-        if (!this.simIdExists(simId)) { throw new Error("Invalid simId")};
+    getWorldData(args: { simId: string, simName?: string }) {
+        if (!this.simIdExists(args.simId)) { throw new Error("Invalid simId")};
 
-        const playersDTO = this.getPlayers(simId);
+        const playersDTO = this.getPlayers(args.simId);
         const playerIds = this.extractPlayerIds(playersDTO)
         const settlementsDTO = this.getSettlemets(playerIds);
         const mobsDTO = this.getMobs(playerIds);

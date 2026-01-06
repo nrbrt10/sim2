@@ -7,7 +7,7 @@ export class Position {
         this.y = args.y;
     }
 
-    applyDelta(dx: number = 0, dy: number = 0) {
+    applyDelta(dx: number, dy: number) {
         this.x + dx;
         this.y + dy;
     }

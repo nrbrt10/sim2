@@ -19,7 +19,7 @@ export function normalizeSettlementFromDB(args: {
         if (!settlement.production_queue) {
             
         }
-        normalizedStettlements.push({ id: settlement.id, name: settlement.name, ownerId: settlement.player_id, position: { x: settlement.x, y: settlement.y }, behaviors: behaviors, productionQueue: prodQueue })
+        normalizedStettlements.push({ id: settlement.id, name: settlement.name, ownerId: settlement.player_id, position: { x: Number(settlement.x), y: Number(settlement.y) }, behaviors: behaviors, productionQueue: prodQueue })
     });
     return normalizedStettlements;
 }

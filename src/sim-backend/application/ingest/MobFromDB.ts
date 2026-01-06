@@ -16,7 +16,7 @@ export function normalizeMobFromDB(args: {
         } else {
             behaviors = getMobBehaviorDefaults();
         }
-        normalizedMobs.push({ id: mob.id, name: mob.name, ownerId: mob.player_id, position: { x: mob.x, y: mob.y }, behaviors, residenceId: mob.settlement_id })
+        normalizedMobs.push({ id: mob.id, name: mob.name, ownerId: mob.player_id, position: { x: Number(mob.x), y: Number(mob.y) }, behaviors, residenceId: mob.settlement_id })
     })
     return normalizedMobs;
 }
