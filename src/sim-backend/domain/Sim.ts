@@ -57,10 +57,19 @@ export class Sim extends BaseEntity{
 
     getSnapshot() {
         return {
+            players: [...this.players.values()].map(p => ({
+                id: p.id,
+                name: p.name
+            })),
+            settlements: [...this.settlements.values()].map(s => ({
+                id: s.id,
+                name: s.name,
+                position: s.position.get();
+            }))
             mobs: [...this.mobs.values()].map(e => ({
                 id: e.id,
-                x: e.position.x,
-                y: e.position.y
+                name: e.name,
+                position: e.position.get();
             })),
         };
     }

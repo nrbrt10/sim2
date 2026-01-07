@@ -27,6 +27,10 @@ export class SimController {
         this.running = false;
     }
 
+    publishWorldState() {
+        return this.sim?.getSnapshot();
+    }
+
     private loop = () => {
         if (!this.sim) return;
         if (!this.running) return;
@@ -44,4 +48,8 @@ export class SimController {
 
         setTimeout(this.loop, 100);
     }
+}
+
+export function snapshotAPI(simControllerInstance: SimController) {
+    getSnapshot: () => simControllerInstance.publishWorldState();
 }
