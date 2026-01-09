@@ -9,12 +9,6 @@ export class Renderer {
     this.isDragging = false;
   }
 
-  setDependencies(viewport, pointer, entities) {
-    this.viewport = viewport;
-    this.pointer = pointer;
-    this.entities = entities;
-  }
-
   clearCanvas() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.save();

@@ -64,12 +64,14 @@ export class Sim extends BaseEntity{
             settlements: [...this.settlements.values()].map(s => ({
                 id: s.id,
                 name: s.name,
-                position: s.position.get();
-            }))
-            mobs: [...this.mobs.values()].map(e => ({
-                id: e.id,
-                name: e.name,
-                position: e.position.get();
+                ownerId: s.ownerId,
+                position: s.position.get()
+            })),
+            mobs: [...this.mobs.values()].map(m => ({
+                id: m.id,
+                name: m.name,
+                ownerId: m.ownerId,
+                position: m.position.get()
             })),
         };
     }

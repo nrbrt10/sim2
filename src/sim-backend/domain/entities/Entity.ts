@@ -18,11 +18,11 @@ export class BaseEntity {
 }
 
 export class WorldEntity extends BaseEntity {
-  ownerId: string | null;
+  ownerId: string;
   behaviors: Map<string, iBehavior>;
   position: Position;
 
-  constructor(id: string, name: string, ownerId: string | null, position: iPosition, behaviors: Map<string, iBehavior>) {
+  constructor(id: string, name: string, ownerId: string, position: iPosition, behaviors: Map<string, iBehavior>) {
     super(id, name);
     this.ownerId = ownerId;
     this.behaviors = behaviors;

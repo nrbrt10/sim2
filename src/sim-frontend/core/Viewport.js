@@ -42,9 +42,6 @@ export class Viewport {
     Position.scale = Math.max(0.1, Math.min(Position.scale, 5));
 
     if (!!this.entityToTrack) return;
-
-    
-
   }
 
   

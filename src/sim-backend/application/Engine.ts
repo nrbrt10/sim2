@@ -1,15 +1,17 @@
 import { SimRepository } from "../infra/db/SimRepository";
 import { Sim } from "../domain/Sim";
 import { SimBuilder } from "./SimBuilder";
+import { RenderAdapter } from "./RenderAdapter";
 
-export class SimController {
+export class Engine {
     private lastTime = 0;
     private running = false;
     private tickCount = 0;
 
     constructor(
         private readonly repo: SimRepository = new SimRepository(),
-        private sim: Sim | null = null
+        private sim: Sim | null = null,
+        private adapter: RenderAdapter | null = new RenderAdapter()
     ) {}
 
     start(args: { simId: string, simName?: string }) {
@@ -43,13 +45,14 @@ export class SimController {
         this.sim.tick(dt);
         
         if (this.tickCount % 10 ===0) {
-            console.log(this.sim.getSnapshot());
+            const snapshot = this.sim.getSnapshot();
+            if (this.adapter) this.adapter.adaptSnapshotData(snapshot);
         }
 
         setTimeout(this.loop, 100);
     }
 }
 
-export function snapshotAPI(simControllerInstance: SimController) {
-    getSnapshot: () => simControllerInstance.publishWorldState();
+export function snapshotAPI(engineInstance: Engine) {
+    getSnapshot: () => engineInstance.publishWorldState();
 }
