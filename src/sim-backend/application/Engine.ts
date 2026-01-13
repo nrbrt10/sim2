@@ -46,7 +46,9 @@ export class Engine {
         
         if (this.tickCount % 10 ===0) {
             const snapshot = this.sim.getSnapshot();
-            if (this.adapter) this.adapter.adaptSnapshotData(snapshot);
+            if (this.adapter) {
+                const renderSnapshot = this.adapter.adaptSnapshot(snapshot);
+            }
         }
 
         setTimeout(this.loop, 100);

@@ -47,7 +47,7 @@ export class RenderAdapter {
                 name: settlement.name,
                 ownerId: settlement.ownerId
             }
-        }
+        };
     }
 
     adaptMob(mob: mobData) {

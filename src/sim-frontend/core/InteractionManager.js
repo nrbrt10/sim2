@@ -1,52 +1,55 @@
 export class InteractionManager {
-    constructor(state, canvas, viewport, pointer) {
-        this.state = state;
-        this.canvas = canvas;
-        this.viewport = viewport;
-        this.pointer = pointer;
+  constructor(canvas, viewport) {
+    this.canvas = canvas;
+    this.viewport = viewport;
+    this.isDragging = false;
 
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleWheel = this.handleWheel.bind(this);
-    }
+    this.lastMouse = null;
 
-    handleMouseDown(e) {
-        this.state.isDragging = true;
-        this.viewport.entityToTrack = null;
-        this.canvas.style.cursor = 'grabbing';
-        this.viewport.setPan(e.clientX, e.clientY)
-    }
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onWheel = this.onWheel.bind(this);
 
-    handleMouseUp(e) {
-        this.state.isDragging = false;
-        this.canvas.style.cursor = 'grab';
-    }
+    this.attachListeners();
+  }
 
-    handleMouseMove(e) {
-        this.updatePointer(e.clientX, e.clientY);
-        if (this.state.isDragging) {
-            this.viewport.panViewport(e.clientX, e.clientY);
-        } else {
-            this.canvas.style.cursor = 'grab';
-        }
-    }
+  onMouseDown(e) {
+    this.isDragging = true;
+    this.lastMouse = { x: e.clientX, y: e.clientY };
+  }
 
-    handleWheel(e) {
-        e.preventDefault();
-        this.canvas.style.cursor = e.deltaY > 0 ? 'zoom-out' : 'zoom-in';
-        this.viewport.zoomViewport(e.deltaY, e.clientX, e.clientY);
-    }
+  onMouseUp() {
+    this.isDragging = false;
+    this.lastMouse = null;
+  }
 
-    updatePointer(clientX = null, clientY = null) {
-        const {x, y} = this.viewport.position.getPosition();
-        this.pointer.updatePosition(x, y, clientX, clientY)
-    }
+  onMouseMove(e) {
+    if (!this.isDragging) return;
+    const { x, y } = this.lastMouse;
+    const dx = x - e.clientX;
+    const dy = y - e.clientY;
+    this.viewport.pan(dx, dy);
+    this.lastMouse = { x: e.clientX, y: e.clientY };
+  }
 
-    attachListeners() {
-        this.canvas.addEventListener('mousedown', this.handleMouseDown);
-        this.canvas.addEventListener('mousemove', this.handleMouseMove);
-        this.canvas.addEventListener('mouseup', this.handleMouseUp);
-        this.canvas.addEventListener('wheel', this.handleWheel);
-    }
+  onWheel(e) {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.1 : 0.9;
+    const rect = this.canvas.getBoundingClientRect();
+    const anchor = {
+      getPosition: () => ({
+        x: (e.clientX - rect.left) / Position.scale + this.viewport.camera.x,
+        y: (e.clientY - rect.top) / Position.scale + this.viewport.camera.y
+      })
+    };
+    this.viewport.zoom(factor, anchor);
+  }
+
+  attachListeners() {
+    this.canvas.addEventListener('mousedown', this.onMouseDown);
+    this.canvas.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mouseup', this.onMouseUp);
+    this.canvas.addEventListener('wheel', this.onWheel);
+  }
 }

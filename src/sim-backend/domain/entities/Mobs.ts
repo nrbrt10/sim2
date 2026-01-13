@@ -8,7 +8,7 @@ export class Mob extends WorldEntity {
     constructor(args: { 
         id: string,
         name: string,
-        ownerId: string | null,
+        ownerId: string,
         position: iPosition,
         residenceId: string | null,
         behaviors: Map<string, iBehavior>
