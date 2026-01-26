@@ -8,4 +8,5 @@ export interface SimDataDTO {
     players: PlayerDTO[];
     settlements: SettlementDTO[];
     mobs: MobDTO[];
+    map?: unknown
 }

@@ -2,7 +2,7 @@ import { MobDTO } from "../../infra/models/MobDTO";
 import { MobModel } from "../../infra/models/MobModel";
 import { getMobBehaviorDefaults } from "../defaults/Behaviors";
 import { NormalizedBehavior } from "../types/application.types";
-import { normalizeBehaviors } from "./BehaviorsFromDB";
+import { normalizeBehaviors } from "./NormalizeBehavior";
 
 
 export function normalizeMobFromDB(args: {

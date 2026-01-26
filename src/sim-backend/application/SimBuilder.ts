@@ -3,7 +3,7 @@ import { Player } from "../domain/entities/Players";
 import { Settlement } from "../domain/entities/Settlements";
 import { SimFactory } from "../domain/factories/SimFactory";
 import { Sim } from "../domain/Sim";
-import { SimDataDTO } from "../infra/models/SimData";
+import { SimDataDTO } from "../infra/models/SimDataDTO";
 import { EntityBuilder } from "./EntityBuilder";
 
 export class SimBuilder {

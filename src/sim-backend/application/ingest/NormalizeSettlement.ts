@@ -2,7 +2,7 @@ import { ProductionItem } from "../../../sim-types/Types";
 import { SettlementDTO } from "../../infra/models/SettlementDTO";
 import { SettlementModel } from "../../infra/models/SettlementModel";
 import { NormalizedBehavior } from "../types/application.types";
-import { normalizeBehaviors } from "./BehaviorsFromDB";
+import { normalizeBehaviors } from "./NormalizeBehavior";
 
 export function normalizeSettlementFromDB(args: {
     settlements: SettlementDTO[]

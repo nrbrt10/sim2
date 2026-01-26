@@ -1,5 +1,5 @@
 import { db } from "./dbConnector";
-import { mobsSeed, playersSeed, settlementsSeed, simSeed } from "./seed/seedSim";
+import { mobsSeed, playersSeed, settlementsSeed, simSeed } from "./seed/seedEntities";
 
 
 export function seedDB() {
