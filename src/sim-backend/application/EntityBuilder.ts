@@ -8,11 +8,11 @@ import { SettlementFactory } from "../domain/factories/SettlementFactory";
 import { MobModel } from "../infra/models/MobModel";
 import { PlayerModel } from "../infra/models/PlayerModel";
 import { SettlementModel } from "../infra/models/SettlementModel";
-import { SimDataDTO } from "../infra/models/SimData";
+import { SimDataDTO } from "../infra/models/SimDataDTO";
 import { BehaviorBuilder } from "./BehaviorBuilder";
-import { normalizeMobFromDB } from "./ingest/MobFromDB";
-import { normalizePlayerFromDB } from "./ingest/PlayerFromDB";
-import { normalizeSettlementFromDB } from "./ingest/SettlementFromDB";
+import { normalizeMobFromDB } from "./ingest/NormalizeMob";
+import { normalizePlayerFromDB } from "./ingest/NormalizePlayer";
+import { normalizeSettlementFromDB } from "./ingest/NormalizeSettlement";
 
 export class EntityBuilder {
     static buildInitialState(data: SimDataDTO) {

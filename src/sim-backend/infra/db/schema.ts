@@ -47,6 +47,26 @@ FOREIGN KEY (player_id) REFERENCES players(id)
 );
 `
 
+const worldStateTable = `
+CREATE TABLE IF NOT EXISTS world_state (
+id TEXT PRIMARY KEY,
+sim_id TEXT
+map_id TEXT
+data BLOB
+created_at TEXT DEFAULT CURRENT_TIMESTAMP
+FOREIGN KEY (sim_id) REFERENCES sims(id)
+FOREIGN KEY (map_id) REFERENCES maps(id)
+);
+`
+
+const mapsTable=`
+CREATE TABLE IF NOT EXISTS maps (
+id TEXT PRIMARY KEY,
+data BLOB,
+created_at TEXT DEFAULT CURRENT_TIMESTAMP
+)
+`
+
 export const schema = [
     simsTable,
     playersTable,

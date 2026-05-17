@@ -1,6 +1,5 @@
 import { NormalizedBehavior } from "../types/application.types";
 
-
 type rawBehaviorMap = {
     [system: string]: { config: string, params?: {} }
 }
