@@ -22,7 +22,6 @@ export class Engine {
         this.running = true;
         this.lastTime = performance.now();
         this.loop();
-
     }
 
     stop() {

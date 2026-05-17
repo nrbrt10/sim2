@@ -1,7 +1,7 @@
 {
   "name": "sim2",
   "version": "1.0.0",
-  "description": "",
+  "description": "A small TypeScript-based simulation backend. The project provides basic simulation orchestration code (SimController, SimBuilder, repository/DB wiring) and uses SQLite (better-sqlite3) for persistence.",
   "main": "index.js",
   "scripts": {
     "dev": "tsx src/index.ts",
